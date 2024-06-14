@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="505.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.controller.AdminController">
+   <children>
+      <Text layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Administrator">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Button fx:id="adminCreateBtn" layoutX="110.0" layoutY="465.0" mnemonicParsing="false" text="Create" textAlignment="CENTER" />
+      <Button fx:id="adminEditBtn" layoutX="173.0" layoutY="465.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="55.0" text="Edit" textAlignment="CENTER" />
+      <Button fx:id="adminDeleteBtn" layoutX="236.0" layoutY="465.0" mnemonicParsing="false" text="Delete" textAlignment="CENTER" />
+      <TableView fx:id="adminTable" layoutX="297.0" layoutY="34.0" prefHeight="426.0" prefWidth="347.0">
+        <columns>
+          <TableColumn fx:id="adminTableAccountNumber" text="Number" />
+          <TableColumn fx:id="adminTableAccountName" text="Name" />
+            <TableColumn fx:id="adminTableAccountBalance" text="Balance" />
+            <TableColumn fx:id="adminTableAccountType" text="Type" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Button fx:id="adminSummeryBtn" layoutX="297.0" layoutY="466.0" mnemonicParsing="false" text="Summery" />
+      <Button fx:id="adminCustomerBtn" layoutX="382.0" layoutY="466.0" mnemonicParsing="false" text="Customers" />
+      <Button fx:id="adminAccountBtn" layoutX="471.0" layoutY="466.0" mnemonicParsing="false" text="Accounts" />
+      <Button fx:id="adminTransactionBtn" layoutX="555.0" layoutY="466.0" mnemonicParsing="false" text="Transactions" />
+      <GridPane layoutX="13.0" layoutY="37.0" prefHeight="426.0" prefWidth="277.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="97.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="201.0" minWidth="10.0" prefWidth="180.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label text="ID" />
+            <Label text="First Name" GridPane.rowIndex="1" />
+            <Label layoutX="10.0" layoutY="15.0" text="Last Name" GridPane.rowIndex="2" />
+            <Label layoutX="10.0" layoutY="45.0" text="National ID" GridPane.rowIndex="3" />
+            <Label layoutX="10.0" layoutY="75.0" text="Gender" GridPane.rowIndex="4" />
+            <Label layoutX="10.0" layoutY="105.0" text="BirthDate" GridPane.rowIndex="5" />
+            <Label layoutX="10.0" layoutY="135.0" text="Email" GridPane.rowIndex="6" />
+            <Label layoutX="10.0" layoutY="181.0" text="Phone" GridPane.rowIndex="7" />
+            <Label text="City" GridPane.rowIndex="8" />
+            <Label text="Address" GridPane.rowIndex="9" />
+            <Label text="Username" GridPane.rowIndex="10" />
+            <Label text="Password" GridPane.rowIndex="11" />
+            <TextField fx:id="idField" GridPane.columnIndex="1" />
+            <TextField fx:id="fnameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="lnameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="nidField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <HBox prefHeight="42.0" prefWidth="292.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <children>
+                  <RadioButton fx:id="maleToggle" mnemonicParsing="false" selected="true" text="Male">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="genderToggle" />
+                     </toggleGroup>
+                     <HBox.margin>
+                        <Insets right="20.0" top="5.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="femaleToggle" mnemonicParsing="false" selected="true" text="Female" toggleGroup="$genderToggle">
+                     <HBox.margin>
+                        <Insets left="20.0" top="5.0" />
+                     </HBox.margin>
+                  </RadioButton>
+               </children>
+            </HBox>
+            <DatePicker fx:id="birthDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="phoneField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <ComboBox fx:id="cityCmb" prefHeight="31.0" prefWidth="194.0" promptText="City" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <TextField fx:id="addressField" prefHeight="0.0" prefWidth="163.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <TextField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+         </children>
+      </GridPane>
+      <Button fx:id="exit" layoutX="14.0" layoutY="465.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="70.0" text="Exit" textAlignment="CENTER" />
+   </children>
+</Pane>
