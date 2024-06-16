@@ -37,7 +37,8 @@ public class AuthenticationController implements Initializable {
 
         loginBtn.setOnAction(event -> {
             try {
-                if (CustomerBl.getCustomerBl().findByUsernameAndPassword(usernameField.getText(), passwordField.getText()) != null) {
+                AppData.customer = CustomerBl.getCustomerBl().findByUsernameAndPassword(usernameField.getText(), passwordField.getText());
+                if (AppData.customer != null) {
                     Stage stage = new Stage();
                     Scene scene = new Scene(
                             FXMLLoader.load(WindowsManager.class.getResource("../view/Customer.fxml"))
@@ -46,7 +47,9 @@ public class AuthenticationController implements Initializable {
                     stage.show();
                     loginBtn.getScene().getWindow().hide();
                     System.out.println(AppData.customer);
-                } else if (AdminBl.getAdminBl().findByUsernameAndPassword(usernameField.getText(), passwordField.getText()) != null) {
+                }
+                AppData.admin = AdminBl.getAdminBl().findByUsernameAndPassword(usernameField.getText(), passwordField.getText());
+                if (AppData.admin != null) {
                     Stage stage = new Stage();
                     Scene scene = new Scene(
                             FXMLLoader.load(WindowsManager.class.getResource("../view/Admin.fxml"))
@@ -56,7 +59,7 @@ public class AuthenticationController implements Initializable {
                     loginBtn.getScene().getWindow().hide();
                     System.out.println(AppData.admin);
                 }
-            } catch (Exception e) {
+            }catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Error: \n" + e.getMessage());
                 alert.show();
                 log.error("Login Error: " + e.getMessage());
