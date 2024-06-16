@@ -37,8 +37,7 @@ public class AuthenticationController implements Initializable {
 
         loginBtn.setOnAction(event -> {
             try {
-                AppData.customer = CustomerBl.getCustomerBl().findByUsernameAndPassword(usernameField.getText(), passwordField.getText());
-                if (AppData.customer != null) {
+                if (CustomerBl.getCustomerBl().findByUsernameAndPassword(usernameField.getText(), passwordField.getText()) != null) {
                     Stage stage = new Stage();
                     Scene scene = new Scene(
                             FXMLLoader.load(WindowsManager.class.getResource("../view/Customer.fxml"))
@@ -47,18 +46,15 @@ public class AuthenticationController implements Initializable {
                     stage.show();
                     loginBtn.getScene().getWindow().hide();
                     System.out.println(AppData.customer);
-                } else {
-                    AppData.admin = AdminBl.getAdminBl().findByUsernameAndPassword(usernameField.getText(), passwordField.getText());
-                    if (AppData.admin != null) {
-                        Stage stage = new Stage();
-                        Scene scene = new Scene(
-                                FXMLLoader.load(WindowsManager.class.getResource("../view/Admin.fxml"))
-                        );
-                        stage.setScene(scene);
-                        stage.show();
-                        loginBtn.getScene().getWindow().hide();
-                        System.out.println(AppData.admin);
-                    }
+                } else if (AdminBl.getAdminBl().findByUsernameAndPassword(usernameField.getText(), passwordField.getText()) != null) {
+                    Stage stage = new Stage();
+                    Scene scene = new Scene(
+                            FXMLLoader.load(WindowsManager.class.getResource("../view/Admin.fxml"))
+                    );
+                    stage.setScene(scene);
+                    stage.show();
+                    loginBtn.getScene().getWindow().hide();
+                    System.out.println(AppData.admin);
                 }
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Error: \n" + e.getMessage());
