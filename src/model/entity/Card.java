@@ -11,8 +11,9 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 public class Card {
-    private Account pin;
-    private Account password;
+    private int id;
+    private String accountNumber;
+    private int pin;
 
     @Override
     public String toString() {

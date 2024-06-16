@@ -16,6 +16,7 @@ public class Bill {
         private Customer customerId;
         private String billNumber;
         private BillTypes billTypes;
+        private int amount;
 
     @Override
     public String toString() {

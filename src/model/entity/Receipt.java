@@ -7,14 +7,16 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import src.model.entity.enums.TransactionTypes;
 
+import java.sql.Timestamp;
+
 @NoArgsConstructor
 @Getter
 @Setter
 @SuperBuilder
 public class Receipt {
-    private Transaction id;
-    private Transaction amount;
-    private Transaction transactionDateTime;
+    private int id;
+    private Double amount;
+    private Timestamp transactionDateTime;
     private TransactionTypes transactionType;
     private Account sourceAccount;
     private Account destinationAccount;

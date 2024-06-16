@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @SuperBuilder
 public class Loan {
+    private int id;
     private Double interest;
     private Double amount;
     private Timestamp maturityDate;
