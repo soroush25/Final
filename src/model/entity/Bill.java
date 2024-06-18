@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import src.model.entity.enums.BillTypes;
 
 @NoArgsConstructor
 @Getter
@@ -14,8 +13,7 @@ import src.model.entity.enums.BillTypes;
 public class Bill {
         private int id;
         private Customer customerId;
-        private String billNumber;
-        private BillTypes billTypes;
+        private int billNumber;
         private int amount;
 
     @Override

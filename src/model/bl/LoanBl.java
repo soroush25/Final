@@ -17,7 +17,6 @@ public class LoanBl implements CRUD<Loan> {
     private LoanBl() {
     }
 
-
     @Override
     public Loan save(Loan loan) throws Exception {
         try (LoanDa loanDa = new LoanDa()) {

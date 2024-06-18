@@ -24,6 +24,7 @@ public class CardBl  implements CRUD<Card> {
             return card;
         }
     }
+
     @Override
     public Card edit(Card card) throws Exception {
         try (CardDa cardDa = new CardDa()) {

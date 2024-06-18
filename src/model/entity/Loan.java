@@ -18,7 +18,6 @@ public class Loan {
     private int id;
     private Double interest;
     private Double amount;
-    private Timestamp maturityDate;
     private LoanType loanType;
     private LocalDateTime startDate;
 

@@ -75,6 +75,4 @@ public class BillBl implements CRUD<Bill> {
             }
         }
     }
-
-
 }

@@ -15,9 +15,9 @@ import java.sql.Timestamp;
 @SuperBuilder
 public class Receipt {
     private int id;
-    private Double amount;
-    private Timestamp transactionDateTime;
-    private TransactionTypes transactionType;
+    private Transaction amount;
+    private Transaction transactionDateTime;
+    private Transaction transactionType;
     private Account sourceAccount;
     private Account destinationAccount;
     private Customer firstName;
