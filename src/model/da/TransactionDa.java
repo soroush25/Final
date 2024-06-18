@@ -181,6 +181,12 @@ public class TransactionDa implements AutoCloseable, CRUD<Transaction> {
         return transaction;
     }
 
+    public Transaction transactionSum () throws Exception {
+        preparedStatement = connection.prepareStatement("SELECT SUM(AMOUNT) FROM TRANSACTION");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return (Transaction) resultSet;
+    }
+
     public List<Transaction> findByDateTimeRangeReport(Timestamp start, Timestamp end) throws Exception {
         List<Transaction> transactionList = new ArrayList<>();
         preparedStatement = connection.prepareStatement("SELECT * FROM TRANSACTION WHERE transactionDateTime BETWEEN ? AND ? ORDER BY ID");

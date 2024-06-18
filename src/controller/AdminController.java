@@ -40,10 +40,10 @@ public class AdminController implements Initializable {
     private TableView<Admin> adminTable;
 
     @FXML
-    private TableColumn<Admin, Integer> adminTableAccountNumber;
+    private TableColumn<Admin, Integer> adminTableID;
 
     @FXML
-    private TableColumn<Admin, String> adminTableAccountName, adminTableAccountBalance, adminTableAccountType;
+    private TableColumn<Admin, String> adminTableName, adminTableUsername, adminTablePassword;
 
     @FXML
     private ToggleGroup genderToggle;
@@ -74,7 +74,7 @@ public class AdminController implements Initializable {
         adminCreateBtn.setOnAction(event -> {
             try {
                 RadioButton gender = (RadioButton) genderToggle.getSelectedToggle();
-                Customer customer = new Customer()
+                Customer customer = Customer
                         .builder()
                         .id(Integer.parseInt(idField.getText()))
                         .firstName(Validator.nameValidator(fnameField.getText(), "Invalid First Name!"))
@@ -89,6 +89,7 @@ public class AdminController implements Initializable {
                         .username(usernameField.getText())
                         .password(passwordField.getText())
                         .build();
+
                 CustomerBl.getCustomerBl().save(customer);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Saved!");
                 alert.show();
@@ -102,9 +103,9 @@ public class AdminController implements Initializable {
         adminEditBtn.setOnAction(event -> {
             try {
                 RadioButton gender = (RadioButton) genderToggle.getSelectedToggle();
-                Customer customer = new Customer()
+                Customer customer = Customer
                         .builder()
-                        .id(Integer.parseInt(idField.getText()))
+                        .id(AppData.customer.getId())
                         .firstName(Validator.nameValidator(fnameField.getText(), "Invalid First Name!"))
                         .lastName(Validator.nameValidator(lnameField.getText(), "Invalid Last Name!"))
                         .nationalId(Validator.nationalIDValidator(nidField.getText(), "Invalid National ID!"))
@@ -117,10 +118,12 @@ public class AdminController implements Initializable {
                         .username(usernameField.getText())
                         .password(passwordField.getText())
                         .build();
+
                 CustomerBl.getCustomerBl().edit(customer);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Saved!");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Edited!");
                 alert.show();
                 resetForm();
+
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Error!\n" + e.getMessage());
                 alert.show();
@@ -227,13 +230,13 @@ public class AdminController implements Initializable {
             passwordField.setText(admin.getPassword());
         });
     }
-//todo
-    private void showDataOnTable(List<Admin> customerList) throws Exception {
-        ObservableList<Admin> observableList = FXCollections.observableList(customerList);
-        adminTableAccountNumber.setCellValueFactory(new PropertyValueFactory<>("accountNumber"));
-        adminTableAccountName.setCellValueFactory(new PropertyValueFactory<>("lname"));
-        adminTableAccountBalance.setCellValueFactory(new PropertyValueFactory<>("balance"));
-        adminTableAccountType.setCellValueFactory(new PropertyValueFactory<>("accountType"));
+
+    private void showDataOnTable(List<Admin> adminList) throws Exception {
+        ObservableList<Admin> observableList = FXCollections.observableList(adminList);
+        adminTableID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        adminTableName.setCellValueFactory(new PropertyValueFactory<>("lname"));
+        adminTableUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
+        adminTablePassword.setCellValueFactory(new PropertyValueFactory<>("password"));
         adminTable.setItems(observableList);
     }
 
