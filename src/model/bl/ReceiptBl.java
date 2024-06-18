@@ -2,9 +2,7 @@ package src.model.bl;
 
 import lombok.Getter;
 import src.controller.exceptions.NotFoundException;
-import src.model.da.BillDa;
 import src.model.da.ReceiptDa;
-import src.model.entity.Bill;
 import src.model.entity.Receipt;
 import src.model.tools.CRUD;
 
@@ -55,6 +53,14 @@ public class ReceiptBl implements CRUD<Receipt> {
         try (ReceiptDa receiptDa = new ReceiptDa()) {
             List<Receipt> receiptList = receiptDa.findAll();
             if (!receiptList.isEmpty()) {
+                for (Receipt receipt : receiptList) {
+                    receipt.setAmount(TransactionBl.getTransactionBl().findById(receipt.getAmount().getId()));
+                    receipt.setTransactionDateTime(TransactionBl.getTransactionBl().findById(receipt.getTransactionDateTime().getId()));
+                    receipt.setSourceAccount(AccountBl.getAccountBl().findById(receipt.getSourceAccount().getAccountNumber()));
+                    receipt.setDestinationAccount(AccountBl.getAccountBl().findById(receipt.getDestinationAccount().getAccountNumber()));
+                    receipt.setFirstName(CustomerBl.getCustomerBl().findById(receipt.getFirstName().getId()));
+                    receipt.setLastName(CustomerBl.getCustomerBl().findById(receipt.getLastName().getId()));
+                }
                 return receiptList;
             } else {
                 throw new NotFoundException();
@@ -67,6 +73,12 @@ public class ReceiptBl implements CRUD<Receipt> {
         try (ReceiptDa receiptDa = new ReceiptDa()) {
             Receipt receipt = receiptDa.findById(id);
             if (receipt != null) {
+                receipt.setAmount(TransactionBl.getTransactionBl().findById(receipt.getAmount().getId()));
+                receipt.setTransactionDateTime(TransactionBl.getTransactionBl().findById(receipt.getTransactionDateTime().getId()));
+                receipt.setSourceAccount(AccountBl.getAccountBl().findById(receipt.getSourceAccount().getAccountNumber()));
+                receipt.setDestinationAccount(AccountBl.getAccountBl().findById(receipt.getDestinationAccount().getAccountNumber()));
+                receipt.setFirstName(CustomerBl.getCustomerBl().findById(receipt.getFirstName().getId()));
+                receipt.setLastName(CustomerBl.getCustomerBl().findById(receipt.getLastName().getId()));
                 return receipt;
             } else {
                 throw new NotFoundException();

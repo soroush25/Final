@@ -57,6 +57,9 @@ public class BillBl implements CRUD<Bill> {
         try (BillDa billDa = new BillDa()) {
             List<Bill> billList = billDa.findAll();
             if (!billList.isEmpty()) {
+                for (Bill bill : billList) {
+                    bill.setCustomerId(CustomerBl.getCustomerBl().findById(bill.getCustomerId().getId()));
+                }
                 return billList;
             } else {
                 throw new NotFoundException();
@@ -69,6 +72,7 @@ public class BillBl implements CRUD<Bill> {
         try (BillDa billDa = new BillDa()) {
             Bill bill = billDa.findById(id);
             if (bill != null) {
+                bill.setCustomerId(CustomerBl.getCustomerBl().findById(bill.getCustomerId().getId()));
                 return bill;
             } else {
                 throw new NotFoundException();

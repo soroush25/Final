@@ -26,16 +26,15 @@ public class ReceiptDa implements AutoCloseable, CRUD<Receipt> {
     public Receipt save(Receipt receipt) throws Exception {
         receipt.setId(ConnectionProvider.getConnectionProvider().getNextId("receipt_seq"));
         preparedStatement = connection.prepareStatement(
-                "INSERT INTO RECEIPT (id, amount, transactionDateTime, transactionType, account_src, account_dst, fname, lname) VALUES (?,?,?,?,?,?,?,?)"
+                "INSERT INTO RECEIPT (id, amount, transactionDateTime, account_src, account_dst, fname, lname) VALUES (?,?,?,?,?,?,?)"
         );
         preparedStatement.setInt(1, receipt.getId());
         preparedStatement.setInt(2, Integer.parseInt(String.valueOf(receipt.getAmount())));
         preparedStatement.setTimestamp(3, Timestamp.valueOf(receipt.getTransactionDateTime().toString()));
-        preparedStatement.setString(4, String.valueOf(receipt.getTransactionType()));
-        preparedStatement.setInt(5, receipt.getSourceAccount().getAccountNumber());
-        preparedStatement.setInt(6, receipt.getDestinationAccount().getAccountNumber());
-        preparedStatement.setString(7, String.valueOf(receipt.getFirstName()));
-        preparedStatement.setString(8, String.valueOf(receipt.getLastName()));
+        preparedStatement.setInt(4, receipt.getSourceAccount().getAccountNumber());
+        preparedStatement.setInt(5, receipt.getDestinationAccount().getAccountNumber());
+        preparedStatement.setString(6, String.valueOf(receipt.getFirstName()));
+        preparedStatement.setString(7, String.valueOf(receipt.getLastName()));
         preparedStatement.execute();
         return receipt;
     }
@@ -43,16 +42,15 @@ public class ReceiptDa implements AutoCloseable, CRUD<Receipt> {
     @Override
     public Receipt edit(Receipt receipt) throws Exception {
         preparedStatement = connection.prepareStatement(
-                "UPDATE RECEIPT SET amount = ?, transactionDateTime = ?, transactionType = ?, account_src = ?, account_dst = ?, fname = ?, lname = ? WHERE id = ?"
+                "UPDATE RECEIPT SET amount = ?, transactionDateTime = ?, account_src = ?, account_dst = ?, fname = ?, lname = ? WHERE id = ?"
         );
         preparedStatement.setInt(1, Integer.parseInt(String.valueOf(receipt.getAmount())));
         preparedStatement.setTimestamp(2, Timestamp.valueOf(receipt.getTransactionDateTime().toString()));
-        preparedStatement.setString(3, String.valueOf(receipt.getTransactionType()));
-        preparedStatement.setInt(4, receipt.getSourceAccount().getAccountNumber());
-        preparedStatement.setInt(5, receipt.getDestinationAccount().getAccountNumber());
-        preparedStatement.setString(6, String.valueOf(receipt.getFirstName()));
-        preparedStatement.setString(7, String.valueOf(receipt.getLastName()));
-        preparedStatement.setInt(8, receipt.getId());
+        preparedStatement.setInt(3, receipt.getSourceAccount().getAccountNumber());
+        preparedStatement.setInt(4, receipt.getDestinationAccount().getAccountNumber());
+        preparedStatement.setString(5, String.valueOf(receipt.getFirstName()));
+        preparedStatement.setString(6, String.valueOf(receipt.getLastName()));
+        preparedStatement.setInt(7, receipt.getId());
         preparedStatement.execute();
         return receipt;
     }
@@ -78,7 +76,6 @@ public class ReceiptDa implements AutoCloseable, CRUD<Receipt> {
                     .id(resultSet.getInt("id"))
                     .amount(Transaction.builder().amount(resultSet.getInt("amount")).build())
                     .transactionDateTime(Transaction.builder().transactionDateTime(resultSet.getTimestamp("transactionDateTime")).build())
-                    .transactionType(Transaction.builder().transactionType(TransactionTypes.valueOf(resultSet.getString("transactionType"))).build())
                     .sourceAccount(Account.builder().accountNumber(resultSet.getInt("account_src")).build())
                     .destinationAccount(Account.builder().accountNumber(resultSet.getInt("account_dst")).build())
                     .firstName(Customer.builder().firstName(resultSet.getString("fname")).build())
@@ -101,7 +98,6 @@ public class ReceiptDa implements AutoCloseable, CRUD<Receipt> {
                     .id(resultSet.getInt("id"))
                     .amount(Transaction.builder().amount(resultSet.getInt("amount")).build())
                     .transactionDateTime(Transaction.builder().transactionDateTime(resultSet.getTimestamp("transactionDateTime")).build())
-                    .transactionType(Transaction.builder().transactionType(TransactionTypes.valueOf(resultSet.getString("transactionType"))).build())
                     .sourceAccount(Account.builder().accountNumber(resultSet.getInt("account_src")).build())
                     .destinationAccount(Account.builder().accountNumber(resultSet.getInt("account_dst")).build())
                     .firstName(Customer.builder().firstName(resultSet.getString("fname")).build())

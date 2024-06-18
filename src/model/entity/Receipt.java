@@ -17,7 +17,6 @@ public class Receipt {
     private int id;
     private Transaction amount;
     private Transaction transactionDateTime;
-    private Transaction transactionType;
     private Account sourceAccount;
     private Account destinationAccount;
     private Customer firstName;

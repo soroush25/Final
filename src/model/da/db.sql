@@ -73,10 +73,9 @@ create table Loan
 
 create table Receipt
 (
-    id                  number references Transaction,
+    id                  number primary key,
     amount              nvarchar2(30) references Transaction,
     transactionDateTime timestamp references Transaction,
-    transactionType     nvarchar2(10) references Transaction,
     account_src         number references Account,
     account_dst         number references Account,
     fname               nvarchar2(30) references Customer,
