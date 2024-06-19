@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="505.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.controller.AdminController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.controller.AdminController">
    <children>
       <Text layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Administrator">
          <font>
@@ -15,7 +28,7 @@
       <Button fx:id="adminCreateBtn" layoutX="110.0" layoutY="465.0" mnemonicParsing="false" text="Create" textAlignment="CENTER" />
       <Button fx:id="adminEditBtn" layoutX="173.0" layoutY="465.0" mnemonicParsing="false" prefWidth="55.0" text="Edit" textAlignment="CENTER" />
       <Button fx:id="adminDeleteBtn" layoutX="236.0" layoutY="465.0" mnemonicParsing="false" text="Delete" textAlignment="CENTER" />
-      <TableView fx:id="adminTable" layoutX="297.0" layoutY="6.0" prefHeight="454.0" prefWidth="347.0">
+      <TableView fx:id="adminTable" layoutX="297.0" layoutY="6.0" prefHeight="492.0" prefWidth="340.0">
         <columns>
           <TableColumn fx:id="adminTableID" text="ID" />
           <TableColumn fx:id="adminTableName" text="Name" />
@@ -26,10 +39,10 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="adminSummeryBtn" layoutX="297.0" layoutY="466.0" mnemonicParsing="false" text="Summery" />
-      <Button fx:id="adminCustomerBtn" layoutX="382.0" layoutY="466.0" mnemonicParsing="false" text="Customers" />
-      <Button fx:id="adminAccountBtn" layoutX="471.0" layoutY="466.0" mnemonicParsing="false" text="Accounts" />
-      <Button fx:id="adminTransactionBtn" layoutX="555.0" layoutY="466.0" mnemonicParsing="false" text="Transactions" />
+      <Button fx:id="adminSummeryBtn" layoutX="99.0" layoutY="504.0" mnemonicParsing="false" text="Summery" />
+      <Button fx:id="adminCustomerBtn" layoutX="184.0" layoutY="504.0" mnemonicParsing="false" text="Customers" />
+      <Button fx:id="adminAccountBtn" layoutX="273.0" layoutY="504.0" mnemonicParsing="false" text="Accounts" />
+      <Button fx:id="adminTransactionBtn" layoutX="357.0" layoutY="504.0" mnemonicParsing="false" text="Transactions" />
       <GridPane layoutX="13.0" layoutY="37.0" prefHeight="426.0" prefWidth="277.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="97.0" />
@@ -92,6 +105,9 @@
             <TextField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="11" />
          </children>
       </GridPane>
-      <Button fx:id="exit" layoutX="14.0" layoutY="465.0" mnemonicParsing="false" prefWidth="70.0" text="Exit" textAlignment="CENTER" />
+      <Button fx:id="exit" layoutX="13.0" layoutY="504.0" mnemonicParsing="false" prefWidth="70.0" text="Exit" textAlignment="CENTER" />
+      <Button fx:id="adminCardBtn" layoutX="460.0" layoutY="504.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="51.0" text="Card" />
+      <Button fx:id="adminBillBtn" layoutX="523.0" layoutY="504.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="51.0" text="Bill" />
+      <Button fx:id="adminLoanBtn" layoutX="585.0" layoutY="504.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="51.0" text="Loan" />
    </children>
 </Pane>

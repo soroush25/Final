@@ -66,5 +66,10 @@
             <TableColumn fx:id="dateCol" text="Date" />
         </columns>
       </TableView>
+      <Button fx:id="customerReceiptBtn" layoutX="41.0" layoutY="334.0" mnemonicParsing="false" prefWidth="150.0" text="Receipt">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
    </children>
 </Pane>
