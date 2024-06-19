@@ -5,7 +5,6 @@ import src.model.entity.Account;
 import src.model.entity.Customer;
 import src.model.entity.Receipt;
 import src.model.entity.Transaction;
-import src.model.entity.enums.TransactionTypes;
 import src.model.tools.CRUD;
 import src.model.tools.ConnectionProvider;
 
@@ -26,15 +25,14 @@ public class ReceiptDa implements AutoCloseable, CRUD<Receipt> {
     public Receipt save(Receipt receipt) throws Exception {
         receipt.setId(ConnectionProvider.getConnectionProvider().getNextId("receipt_seq"));
         preparedStatement = connection.prepareStatement(
-                "INSERT INTO RECEIPT (id, amount, transactionDateTime, account_src, account_dst, fname, lname) VALUES (?,?,?,?,?,?,?)"
+                "INSERT INTO RECEIPT (id, amount, transactionDateTime, account_src, account_dst, name) VALUES (?,?,?,?,?,?)"
         );
         preparedStatement.setInt(1, receipt.getId());
         preparedStatement.setInt(2, Integer.parseInt(String.valueOf(receipt.getAmount())));
         preparedStatement.setTimestamp(3, Timestamp.valueOf(receipt.getTransactionDateTime().toString()));
         preparedStatement.setInt(4, receipt.getSourceAccount().getAccountNumber());
         preparedStatement.setInt(5, receipt.getDestinationAccount().getAccountNumber());
-        preparedStatement.setString(6, String.valueOf(receipt.getFirstName()));
-        preparedStatement.setString(7, String.valueOf(receipt.getLastName()));
+        preparedStatement.setString(6, String.valueOf(receipt.getName()));
         preparedStatement.execute();
         return receipt;
     }
@@ -42,15 +40,14 @@ public class ReceiptDa implements AutoCloseable, CRUD<Receipt> {
     @Override
     public Receipt edit(Receipt receipt) throws Exception {
         preparedStatement = connection.prepareStatement(
-                "UPDATE RECEIPT SET amount = ?, transactionDateTime = ?, account_src = ?, account_dst = ?, fname = ?, lname = ? WHERE id = ?"
+                "UPDATE RECEIPT SET amount = ?, transactionDateTime = ?, account_src = ?, account_dst = ?, name = ? WHERE id = ?"
         );
         preparedStatement.setInt(1, Integer.parseInt(String.valueOf(receipt.getAmount())));
         preparedStatement.setTimestamp(2, Timestamp.valueOf(receipt.getTransactionDateTime().toString()));
         preparedStatement.setInt(3, receipt.getSourceAccount().getAccountNumber());
         preparedStatement.setInt(4, receipt.getDestinationAccount().getAccountNumber());
-        preparedStatement.setString(5, String.valueOf(receipt.getFirstName()));
-        preparedStatement.setString(6, String.valueOf(receipt.getLastName()));
-        preparedStatement.setInt(7, receipt.getId());
+        preparedStatement.setString(5, String.valueOf(receipt.getName()));
+        preparedStatement.setInt(6, receipt.getId());
         preparedStatement.execute();
         return receipt;
     }
@@ -78,8 +75,7 @@ public class ReceiptDa implements AutoCloseable, CRUD<Receipt> {
                     .transactionDateTime(Transaction.builder().transactionDateTime(resultSet.getTimestamp("transactionDateTime")).build())
                     .sourceAccount(Account.builder().accountNumber(resultSet.getInt("account_src")).build())
                     .destinationAccount(Account.builder().accountNumber(resultSet.getInt("account_dst")).build())
-                    .firstName(Customer.builder().firstName(resultSet.getString("fname")).build())
-                    .lastName(Customer.builder().lastName(resultSet.getString("lname")).build())
+                    .name(Customer.builder().lastName(resultSet.getString("name")).build())
                     .build();
             receiptList.add(receipt);
         }
@@ -100,8 +96,7 @@ public class ReceiptDa implements AutoCloseable, CRUD<Receipt> {
                     .transactionDateTime(Transaction.builder().transactionDateTime(resultSet.getTimestamp("transactionDateTime")).build())
                     .sourceAccount(Account.builder().accountNumber(resultSet.getInt("account_src")).build())
                     .destinationAccount(Account.builder().accountNumber(resultSet.getInt("account_dst")).build())
-                    .firstName(Customer.builder().firstName(resultSet.getString("fname")).build())
-                    .lastName(Customer.builder().lastName(resultSet.getString("lname")).build())
+                    .name(Customer.builder().lastName(resultSet.getString("name")).build())
                     .build();
         }
         return receipt;

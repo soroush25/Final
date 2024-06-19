@@ -19,8 +19,7 @@ public class Receipt {
     private Transaction transactionDateTime;
     private Account sourceAccount;
     private Account destinationAccount;
-    private Customer firstName;
-    private Customer lastName;
+    private Customer name;
 
 
     @Override

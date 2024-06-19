@@ -58,8 +58,7 @@ public class ReceiptBl implements CRUD<Receipt> {
                     receipt.setTransactionDateTime(TransactionBl.getTransactionBl().findById(receipt.getTransactionDateTime().getId()));
                     receipt.setSourceAccount(AccountBl.getAccountBl().findById(receipt.getSourceAccount().getAccountNumber()));
                     receipt.setDestinationAccount(AccountBl.getAccountBl().findById(receipt.getDestinationAccount().getAccountNumber()));
-                    receipt.setFirstName(CustomerBl.getCustomerBl().findById(receipt.getFirstName().getId()));
-                    receipt.setLastName(CustomerBl.getCustomerBl().findById(receipt.getLastName().getId()));
+                    receipt.setName(CustomerBl.getCustomerBl().findById(receipt.getName().getId()));
                 }
                 return receiptList;
             } else {
@@ -77,8 +76,7 @@ public class ReceiptBl implements CRUD<Receipt> {
                 receipt.setTransactionDateTime(TransactionBl.getTransactionBl().findById(receipt.getTransactionDateTime().getId()));
                 receipt.setSourceAccount(AccountBl.getAccountBl().findById(receipt.getSourceAccount().getAccountNumber()));
                 receipt.setDestinationAccount(AccountBl.getAccountBl().findById(receipt.getDestinationAccount().getAccountNumber()));
-                receipt.setFirstName(CustomerBl.getCustomerBl().findById(receipt.getFirstName().getId()));
-                receipt.setLastName(CustomerBl.getCustomerBl().findById(receipt.getLastName().getId()));
+                receipt.setName(CustomerBl.getCustomerBl().findById(receipt.getName().getId()));
                 return receipt;
             } else {
                 throw new NotFoundException();
