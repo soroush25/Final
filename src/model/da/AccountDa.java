@@ -151,7 +151,6 @@ public class AccountDa implements AutoCloseable, CRUD<Account> {
         return (Account) resultSet;
     }
 
-
     @Override
     public void close() throws Exception {
         preparedStatement.close();

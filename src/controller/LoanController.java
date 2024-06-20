@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
 @Log4j
 public class LoanController implements Initializable {
     @FXML
-    private TextField idField, fnameField, lnameField, nidField, emailField, phoneField, addressField, usernameField, passwordField;
+    private TextField accountField, fnameField, lnameField, nidField, emailField, phoneField, addressField, usernameField, passwordField;
 
     @FXML
     private Button exit, adminCreateBtn, adminDeleteBtn, adminEditBtn, adminCustomerBtn, adminAccountBtn, adminTransactionBtn, adminSummeryBtn;
@@ -76,7 +76,7 @@ public class LoanController implements Initializable {
                 RadioButton gender = (RadioButton) genderToggle.getSelectedToggle();
                 Customer customer = Customer
                         .builder()
-                        .id(Integer.parseInt(idField.getText()))
+                        .id(Integer.parseInt(accountField.getText()))
                         .firstName(Validator.nameValidator(fnameField.getText(), "Invalid First Name!"))
                         .lastName(Validator.nameValidator(lnameField.getText(), "Invalid Last Name!"))
                         .nationalId(Validator.nationalIDValidator(nidField.getText(), "Invalid National ID!"))
@@ -132,7 +132,7 @@ public class LoanController implements Initializable {
 
         adminDeleteBtn.setOnAction(event -> {
             try {
-                CustomerBl.getCustomerBl().remove(Integer.parseInt(idField.getText()));
+                CustomerBl.getCustomerBl().remove(Integer.parseInt(accountField.getText()));
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Deleted!");
                 alert.show();
                 resetForm();
@@ -212,7 +212,7 @@ public class LoanController implements Initializable {
 
         adminTable.setOnMouseClicked((event) -> {
             Admin admin = adminTable.getSelectionModel().getSelectedItem();
-            idField.setText(String.valueOf(admin.getId()));
+            accountField.setText(String.valueOf(admin.getId()));
             fnameField.setText(admin.getFirstName());
             lnameField.setText(admin.getLastName());
             nidField.setText(admin.getNationalId());
@@ -241,7 +241,7 @@ public class LoanController implements Initializable {
     }
 
     private void resetForm() throws Exception {
-        idField.clear();
+        accountField.clear();
         fnameField.clear();
         lnameField.clear();
         nidField.clear();

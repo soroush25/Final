@@ -30,11 +30,11 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Account" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ID" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Amount" GridPane.rowIndex="1" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Interest" GridPane.rowIndex="2" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Type" GridPane.rowIndex="3" />
-            <TextField fx:id="accountField" GridPane.columnIndex="1" />
+            <TextField fx:id="idField" GridPane.columnIndex="1" />
             <TextField fx:id="amountField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="interestField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="typeField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -46,7 +46,7 @@
       <TableView fx:id="loanTable" layoutX="239.0" prefHeight="400.0" prefWidth="361.0">
          <columns>
             <TableColumn fx:id="loanTableID" text="ID" />
-            <TableColumn fx:id="loanTableAccount" text="Account" />
+            <TableColumn fx:id="loanTableDate" text="Date" />
             <TableColumn fx:id="loanTableAmount" text="Amount" />
             <TableColumn fx:id="loanTableInterest" text="Interest" />
             <TableColumn fx:id="loanTableType" prefWidth="75.0" text="Type" />
