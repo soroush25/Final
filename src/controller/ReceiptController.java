@@ -24,7 +24,7 @@ public class ReceiptController implements Initializable {
     private TableColumn<Receipt, Integer> receiptID;
 
     @FXML
-    private TableColumn<Receipt, String> receiptSrc, receiptDst, receiptName, receiptAmount, receiptDate;
+    private TableColumn<Receipt, String> receiptSrc, receiptDst, receiptAmount, receiptDate;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -42,7 +42,6 @@ public class ReceiptController implements Initializable {
         receiptID.setCellValueFactory(new PropertyValueFactory<>("id"));
         receiptSrc.setCellValueFactory(new PropertyValueFactory<>("account_src"));
         receiptDst.setCellValueFactory(new PropertyValueFactory<>("account_dst"));
-        receiptName.setCellValueFactory(new PropertyValueFactory<>("lname"));
         receiptAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         receiptDate.setCellValueFactory(new PropertyValueFactory<>("transactionDateTime"));
         receiptTable.setItems(observableList);

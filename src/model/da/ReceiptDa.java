@@ -25,14 +25,13 @@ public class ReceiptDa implements AutoCloseable, CRUD<Receipt> {
     public Receipt save(Receipt receipt) throws Exception {
         receipt.setId(ConnectionProvider.getConnectionProvider().getNextId("receipt_seq"));
         preparedStatement = connection.prepareStatement(
-                "INSERT INTO RECEIPT (id, amount, transactionDateTime, account_src, account_dst, name) VALUES (?,?,?,?,?,?)"
+                "INSERT INTO RECEIPT (id, amount, transactionDateTime, account_src, account_dst) VALUES (?,?,?,?,?)"
         );
         preparedStatement.setInt(1, receipt.getId());
         preparedStatement.setInt(2, Integer.parseInt(String.valueOf(receipt.getAmount())));
         preparedStatement.setTimestamp(3, Timestamp.valueOf(receipt.getTransactionDateTime().toString()));
         preparedStatement.setInt(4, receipt.getSourceAccount().getAccountNumber());
         preparedStatement.setInt(5, receipt.getDestinationAccount().getAccountNumber());
-        preparedStatement.setString(6, String.valueOf(receipt.getName()));
         preparedStatement.execute();
         return receipt;
     }
@@ -40,14 +39,13 @@ public class ReceiptDa implements AutoCloseable, CRUD<Receipt> {
     @Override
     public Receipt edit(Receipt receipt) throws Exception {
         preparedStatement = connection.prepareStatement(
-                "UPDATE RECEIPT SET amount = ?, transactionDateTime = ?, account_src = ?, account_dst = ?, name = ? WHERE id = ?"
+                "UPDATE RECEIPT SET amount = ?, transactionDateTime = ?, account_src = ?, account_dst = ? WHERE id = ?"
         );
         preparedStatement.setInt(1, Integer.parseInt(String.valueOf(receipt.getAmount())));
         preparedStatement.setTimestamp(2, Timestamp.valueOf(receipt.getTransactionDateTime().toString()));
         preparedStatement.setInt(3, receipt.getSourceAccount().getAccountNumber());
         preparedStatement.setInt(4, receipt.getDestinationAccount().getAccountNumber());
-        preparedStatement.setString(5, String.valueOf(receipt.getName()));
-        preparedStatement.setInt(6, receipt.getId());
+        preparedStatement.setInt(5, receipt.getId());
         preparedStatement.execute();
         return receipt;
     }
@@ -75,7 +73,6 @@ public class ReceiptDa implements AutoCloseable, CRUD<Receipt> {
                     .transactionDateTime(Transaction.builder().transactionDateTime(resultSet.getTimestamp("transactionDateTime")).build())
                     .sourceAccount(Account.builder().accountNumber(resultSet.getInt("account_src")).build())
                     .destinationAccount(Account.builder().accountNumber(resultSet.getInt("account_dst")).build())
-                    .name(Customer.builder().lastName(resultSet.getString("name")).build())
                     .build();
             receiptList.add(receipt);
         }
@@ -96,7 +93,6 @@ public class ReceiptDa implements AutoCloseable, CRUD<Receipt> {
                     .transactionDateTime(Transaction.builder().transactionDateTime(resultSet.getTimestamp("transactionDateTime")).build())
                     .sourceAccount(Account.builder().accountNumber(resultSet.getInt("account_src")).build())
                     .destinationAccount(Account.builder().accountNumber(resultSet.getInt("account_dst")).build())
-                    .name(Customer.builder().lastName(resultSet.getString("name")).build())
                     .build();
         }
         return receipt;

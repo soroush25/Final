@@ -18,7 +18,6 @@
             <TableColumn fx:id="receiptID" text="ID" />
             <TableColumn fx:id="receiptSrc" text="Source" />
             <TableColumn fx:id="receiptDst" text="Destination" />
-            <TableColumn fx:id="receiptName" prefWidth="75.0" text="Name" />
             <TableColumn fx:id="receiptAmount" text="Amount" />
             <TableColumn fx:id="receiptDate" text="Date" />
          </columns>

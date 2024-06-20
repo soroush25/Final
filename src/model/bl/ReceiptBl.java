@@ -58,7 +58,6 @@ public class ReceiptBl implements CRUD<Receipt> {
                     receipt.setTransactionDateTime(TransactionBl.getTransactionBl().findById(receipt.getTransactionDateTime().getId()));
                     receipt.setSourceAccount(AccountBl.getAccountBl().findById(receipt.getSourceAccount().getAccountNumber()));
                     receipt.setDestinationAccount(AccountBl.getAccountBl().findById(receipt.getDestinationAccount().getAccountNumber()));
-                    receipt.setName(CustomerBl.getCustomerBl().findById(receipt.getName().getId()));
                 }
                 return receiptList;
             } else {
@@ -76,7 +75,6 @@ public class ReceiptBl implements CRUD<Receipt> {
                 receipt.setTransactionDateTime(TransactionBl.getTransactionBl().findById(receipt.getTransactionDateTime().getId()));
                 receipt.setSourceAccount(AccountBl.getAccountBl().findById(receipt.getSourceAccount().getAccountNumber()));
                 receipt.setDestinationAccount(AccountBl.getAccountBl().findById(receipt.getDestinationAccount().getAccountNumber()));
-                receipt.setName(CustomerBl.getCustomerBl().findById(receipt.getName().getId()));
                 return receipt;
             } else {
                 throw new NotFoundException();
