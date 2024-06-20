@@ -1,96 +1,62 @@
 package src.controller;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import lombok.extern.log4j.Log4j;
-import src.model.bl.AdminBl;
-import src.model.bl.CustomerBl;
-import src.model.entity.Admin;
-import src.model.entity.AppData;
-import src.model.entity.Customer;
-import src.model.entity.enums.City;
-import src.model.entity.enums.Gender;
-import src.model.tools.Validator;
-import src.view.WindowsManager;
+import src.model.bl.LoanBl;
+import src.model.entity.Loan;
+import src.model.entity.enums.LoanType;
 
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 
 @Log4j
 public class LoanController implements Initializable {
     @FXML
-    private TextField accountField, fnameField, lnameField, nidField, emailField, phoneField, addressField, usernameField, passwordField;
+    private TextField idField, amountField, interestField, typeField;
 
     @FXML
-    private Button exit, adminCreateBtn, adminDeleteBtn, adminEditBtn, adminCustomerBtn, adminAccountBtn, adminTransactionBtn, adminSummeryBtn;
+    private Button saveBtn, deleteBtn, editBtn;
+    
+    @FXML
+    private TableView<Loan> loanTable;
 
     @FXML
-    private RadioButton maleToggle, femaleToggle;
+    private TableColumn<Loan, Integer> loanTableID;
 
     @FXML
-    private TableView<Admin> adminTable;
-
-    @FXML
-    private TableColumn<Admin, Integer> adminTableID;
-
-    @FXML
-    private TableColumn<Admin, String> adminTableName, adminTableUsername, adminTablePassword;
-
-    @FXML
-    private ToggleGroup genderToggle;
-
-    @FXML
-    private ComboBox<City> cityCmb;
-
-    @FXML
-    private DatePicker birthDatePicker;
+    private TableColumn<Loan, String> loanTableDate, loanTableAmount, loanTableInterest, loanTableType;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        log.info("Entered Admin");
-
-        for (City city : City.values()) {
-            cityCmb.getItems().add(city);
-        }
+        log.info("Entered Loan");
 
         try {
-            cityCmb.getSelectionModel().select(0);
             resetForm();
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Admin Error\n" + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Loan Error\n" + e.getMessage());
             alert.show();
         }
 
-        adminCreateBtn.setOnAction(event -> {
+        saveBtn.setOnAction(event -> {
             try {
-                RadioButton gender = (RadioButton) genderToggle.getSelectedToggle();
-                Customer customer = Customer
+                Loan loan = Loan
                         .builder()
-                        .id(Integer.parseInt(accountField.getText()))
-                        .firstName(Validator.nameValidator(fnameField.getText(), "Invalid First Name!"))
-                        .lastName(Validator.nameValidator(lnameField.getText(), "Invalid Last Name!"))
-                        .nationalId(Validator.nationalIDValidator(nidField.getText(), "Invalid National ID!"))
-                        .gender(Gender.valueOf(gender.getText()))
-                        .birthDate(birthDatePicker.getValue())
-                        .email(Validator.emailValidator(emailField.getText(), "Invalid Email!"))
-                        .phone(Validator.phoneValidator(phoneField.getText(), "Invalid Phone!"))
-                        .city(cityCmb.getSelectionModel().getSelectedItem())
-                        .address(Validator.addressValidator(addressField.getText(), "Invalid Address!"))
-                        .username(usernameField.getText())
-                        .password(passwordField.getText())
+                        .id(Integer.parseInt(idField.getText()))
+                        .startDate(LocalDateTime.now())
+                        .amount(Double.valueOf(amountField.getText()))
+                        .interest(Double.valueOf(interestField.getText()))
+                        .loanType(LoanType.valueOf(typeField.getText()))
                         .build();
 
-                CustomerBl.getCustomerBl().save(customer);
+                LoanBl.getLoanBl().save(loan);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Saved!");
                 alert.show();
                 resetForm();
@@ -100,26 +66,18 @@ public class LoanController implements Initializable {
             }
         });
 
-        adminEditBtn.setOnAction(event -> {
+        editBtn.setOnAction(event -> {
             try {
-                RadioButton gender = (RadioButton) genderToggle.getSelectedToggle();
-                Customer customer = Customer
+                Loan loan = Loan
                         .builder()
-                        .id(AppData.customer.getId())
-                        .firstName(Validator.nameValidator(fnameField.getText(), "Invalid First Name!"))
-                        .lastName(Validator.nameValidator(lnameField.getText(), "Invalid Last Name!"))
-                        .nationalId(Validator.nationalIDValidator(nidField.getText(), "Invalid National ID!"))
-                        .gender(Gender.valueOf(gender.getText()))
-                        .birthDate(birthDatePicker.getValue())
-                        .email(Validator.emailValidator(emailField.getText(), "Invalid Email!"))
-                        .phone(Validator.phoneValidator(phoneField.getText(), "Invalid Phone!"))
-                        .city(cityCmb.getSelectionModel().getSelectedItem())
-                        .address(Validator.addressValidator(addressField.getText(), "Invalid Address!"))
-                        .username(usernameField.getText())
-                        .password(passwordField.getText())
+                        .id(Integer.parseInt(idField.getText()))
+                        .startDate(LocalDateTime.now())
+                        .amount(Double.valueOf(amountField.getText()))
+                        .interest(Double.valueOf(interestField.getText()))
+                        .loanType(LoanType.valueOf(typeField.getText()))
                         .build();
 
-                CustomerBl.getCustomerBl().edit(customer);
+                LoanBl.getLoanBl().edit(loan);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Edited!");
                 alert.show();
                 resetForm();
@@ -130,9 +88,9 @@ public class LoanController implements Initializable {
             }
         });
 
-        adminDeleteBtn.setOnAction(event -> {
+        deleteBtn.setOnAction(event -> {
             try {
-                CustomerBl.getCustomerBl().remove(Integer.parseInt(accountField.getText()));
+                LoanBl.getLoanBl().remove(Integer.parseInt(idField.getText()));
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Deleted!");
                 alert.show();
                 resetForm();
@@ -142,119 +100,30 @@ public class LoanController implements Initializable {
             }
         });
 
-        adminCustomerBtn.setOnAction(event -> {
-            try {
-                Stage stage = new Stage();
-                Scene scene = new Scene(
-                        FXMLLoader.load(WindowsManager.class.getResource("../view/AdminCustomer.fxml"))
-                );
-                stage.setScene(scene);
-                stage.show();
-            } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Error: \n" + e.getMessage());
-                alert.show();
-                log.error("AdminCustomer Error : " + e.getMessage());
-            }
-        });
-
-        adminAccountBtn.setOnAction(event -> {
-            try {
-                Stage stage = new Stage();
-                Scene scene = new Scene(
-                        FXMLLoader.load(WindowsManager.class.getResource("../view/AdminAccount.fxml"))
-                );
-                stage.setScene(scene);
-                stage.show();
-            } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Error: \n" + e.getMessage());
-                alert.show();
-                log.error("AdminAccount Error : " + e.getMessage());
-            }
-        });
-
-        adminTransactionBtn.setOnAction(event -> {
-            try {
-                Stage stage = new Stage();
-                Scene scene = new Scene(
-                        FXMLLoader.load(WindowsManager.class.getResource("../view/AdminTransaction.fxml"))
-                );
-                stage.setScene(scene);
-                stage.show();
-            } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Error: \n" + e.getMessage());
-                alert.show();
-                log.error("AdminTransaction Error : " + e.getMessage());
-            }
-        });
-
-        adminSummeryBtn.setOnAction(event -> {
-            try {
-                Stage stage = new Stage();
-                Scene scene = new Scene(
-                        FXMLLoader.load(WindowsManager.class.getResource("../view/AdminSummery.fxml"))
-                );
-                stage.setScene(scene);
-                stage.show();
-            } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Error: \n" + e.getMessage());
-                alert.show();
-                log.error("AdminSummery Error : " + e.getMessage());
-            }
-        });
-
-        exit.setOnAction((event -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Quit?");
-            if (alert.showAndWait().get().equals(ButtonType.OK)) {
-                Platform.exit();
-            }
-            log.info("Quited");
-        }));
-
-        adminTable.setOnMouseClicked((event) -> {
-            Admin admin = adminTable.getSelectionModel().getSelectedItem();
-            accountField.setText(String.valueOf(admin.getId()));
-            fnameField.setText(admin.getFirstName());
-            lnameField.setText(admin.getLastName());
-            nidField.setText(admin.getNationalId());
-            if (admin.getGender().equals(Gender.Male)) {
-                maleToggle.setSelected(true);
-            } else {
-                femaleToggle.setSelected(true);
-            }
-            birthDatePicker.setValue(admin.getBirthDate());
-            emailField.setText(admin.getEmail());
-            phoneField.setText(admin.getPhone());
-            cityCmb.getSelectionModel().select(admin.getCity().ordinal());
-            addressField.setText(admin.getAddress());
-            usernameField.setText(admin.getUsername());
-            passwordField.setText(admin.getPassword());
+        loanTable.setOnMouseClicked((event) -> {
+            Loan loan = loanTable.getSelectionModel().getSelectedItem();
+            idField.setText(String.valueOf(loan.getId()));
+            amountField.setText(String.valueOf(loan.getAmount()));
+            interestField.setText(String.valueOf(loan.getInterest()));
+            typeField.setText(String.valueOf(loan.getLoanType()));
         });
     }
 
-    private void showDataOnTable(List<Admin> adminList) throws Exception {
-        ObservableList<Admin> observableList = FXCollections.observableList(adminList);
-        adminTableID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        adminTableName.setCellValueFactory(new PropertyValueFactory<>("lname"));
-        adminTableUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
-        adminTablePassword.setCellValueFactory(new PropertyValueFactory<>("password"));
-        adminTable.setItems(observableList);
+    private void showDataOnTable(List<Loan> loanList) throws Exception {
+        ObservableList<Loan> observableList = FXCollections.observableList(loanList);
+        loanTableID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        loanTableDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        loanTableAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        loanTableInterest.setCellValueFactory(new PropertyValueFactory<>("interest"));
+        loanTableType.setCellValueFactory(new PropertyValueFactory<>("loanType"));
+        loanTable.setItems(observableList);
     }
 
     private void resetForm() throws Exception {
-        accountField.clear();
-        fnameField.clear();
-        lnameField.clear();
-        nidField.clear();
-        maleToggle.setSelected(true);
-        emailField.clear();
-        phoneField.clear();
-        addressField.clear();
-        usernameField.clear();
-        passwordField.clear();
-        birthDatePicker.setValue(null);
-        cityCmb.getSelectionModel().select(0);
-        usernameField.clear();
-        passwordField.clear();
-        showDataOnTable(AdminBl.getAdminBl().findAll());
+        idField.clear();
+        amountField.clear();
+        interestField.clear();
+        typeField.clear();
+        showDataOnTable(LoanBl.getLoanBl().findAll());
     }
 }
