@@ -1,6 +1,7 @@
 package src.model.da;
 
 import lombok.extern.log4j.Log4j;
+import src.model.entity.Account;
 import src.model.entity.Card;
 import src.model.tools.CRUD;
 import src.model.tools.ConnectionProvider;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Log4j
-public class CardDa  implements AutoCloseable, CRUD<Card> {
+public class CardDa implements AutoCloseable, CRUD<Card> {
     private final Connection connection;
     private PreparedStatement preparedStatement;
 
@@ -28,7 +29,7 @@ public class CardDa  implements AutoCloseable, CRUD<Card> {
                 "INSERT INTO CARD (id, accountNumber, pin) VALUES (?,?,?)"
         );
         preparedStatement.setInt(1, card.getId());
-        preparedStatement.setInt(2, card.getAccountNumber());
+        preparedStatement.setString(2, String.valueOf(card.getAccountNumber()));
         preparedStatement.setInt(3, card.getPin());
         preparedStatement.execute();
         return card;
@@ -39,7 +40,7 @@ public class CardDa  implements AutoCloseable, CRUD<Card> {
         preparedStatement = connection.prepareStatement(
                 "UPDATE CARD SET accountNumber = ?, pin = ? WHERE id = ?"
         );
-        preparedStatement.setInt(1, card.getAccountNumber());
+        preparedStatement.setString(1, String.valueOf(card.getAccountNumber()));
         preparedStatement.setInt(2, card.getPin());
         preparedStatement.setInt(3, card.getId());
         preparedStatement.execute();
@@ -65,7 +66,7 @@ public class CardDa  implements AutoCloseable, CRUD<Card> {
             Card card = Card
                     .builder()
                     .id(resultSet.getInt("ID"))
-                    .accountNumber(resultSet.getInt("AccountNumber"))
+                    .accountNumber(Account.builder().accountNumber(resultSet.getInt("AccountNumber")).build())
                     .pin(resultSet.getInt("PIN"))
                     .build();
             cardList.add(card);
@@ -82,7 +83,7 @@ public class CardDa  implements AutoCloseable, CRUD<Card> {
             card = Card
                     .builder()
                     .id(resultSet.getInt("ID"))
-                    .accountNumber(resultSet.getInt("AccountNumber"))
+                    .accountNumber(Account.builder().accountNumber(resultSet.getInt("AccountNumber")).build())
                     .pin(resultSet.getInt("PIN"))
                     .build();
         }

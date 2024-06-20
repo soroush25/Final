@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Card {
     private int id;
-    private int accountNumber;
+    private Account accountNumber;
     private int pin;
 
     @Override

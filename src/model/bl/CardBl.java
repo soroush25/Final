@@ -2,9 +2,7 @@ package src.model.bl;
 
 import lombok.Getter;
 import src.controller.exceptions.NotFoundException;
-import src.model.da.BillDa;
 import src.model.da.CardDa;
-import src.model.entity.Bill;
 import src.model.entity.Card;
 import src.model.tools.CRUD;
 
@@ -55,6 +53,9 @@ public class CardBl  implements CRUD<Card> {
         try (CardDa cardDa = new CardDa()) {
             List<Card> cardList = cardDa.findAll();
             if (!cardList.isEmpty()) {
+                for (Card card : cardList) {
+                    card.setAccountNumber(AccountBl.getAccountBl().findByAccountNumber(card.getAccountNumber().getAccountNumber()));
+                }
                 return cardList;
             } else {
                 throw new NotFoundException();
@@ -67,6 +68,7 @@ public class CardBl  implements CRUD<Card> {
         try (CardDa cardDa = new CardDa()) {
             Card card = cardDa.findById(id);
             if (card != null) {
+                card.setAccountNumber(AccountBl.getAccountBl().findByAccountNumber(card.getAccountNumber().getAccountNumber()));
                 return card;
             } else {
                 throw new NotFoundException();
