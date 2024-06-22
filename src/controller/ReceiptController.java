@@ -8,7 +8,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.extern.log4j.Log4j;
 import src.model.bl.ReceiptBl;
+import src.model.bl.TransactionBl;
 import src.model.entity.Receipt;
+import src.model.entity.Transaction;
 
 import java.net.URL;
 import java.util.List;
@@ -18,13 +20,13 @@ import java.util.ResourceBundle;
 public class ReceiptController implements Initializable {
 
     @FXML
-    private TableView<Receipt> receiptTable;
+    private TableView<Transaction> receiptTable;
 
     @FXML
-    private TableColumn<Receipt, Integer> receiptID;
+    private TableColumn<Transaction, Integer> receiptID;
 
     @FXML
-    private TableColumn<Receipt, String> receiptSrc, receiptDst, receiptAmount, receiptDate;
+    private TableColumn<Transaction, String> receiptSrc, receiptDst, receiptAmount, receiptDate;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -37,8 +39,8 @@ public class ReceiptController implements Initializable {
             alert.show();
         }
     }
-    private void showDataOnTable(List<Receipt> receiptList) throws Exception {
-        ObservableList<Receipt> observableList = FXCollections.observableList(receiptList);
+    private void showDataOnTable(List<Transaction> receiptList) throws Exception {
+        ObservableList<Transaction> observableList = FXCollections.observableList(receiptList);
         receiptID.setCellValueFactory(new PropertyValueFactory<>("id"));
         receiptSrc.setCellValueFactory(new PropertyValueFactory<>("sourceAccount"));
         receiptDst.setCellValueFactory(new PropertyValueFactory<>("destinationAccount"));
@@ -48,6 +50,6 @@ public class ReceiptController implements Initializable {
     }
 
     private void resetForm() throws Exception {
-        showDataOnTable(ReceiptBl.getReceiptBl().findAll());
+        showDataOnTable(TransactionBl.getTransactionBl().findAll());
     }
 }
