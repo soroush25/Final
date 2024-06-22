@@ -3,11 +3,7 @@ package src.model.bl;
 import lombok.Getter;
 import src.controller.exceptions.NotFoundException;
 import src.model.da.BillDa;
-import src.model.da.CustomerDa;
-import src.model.da.TransactionDa;
 import src.model.entity.Bill;
-import src.model.entity.Customer;
-import src.model.entity.Transaction;
 import src.model.tools.CRUD;
 
 import java.util.List;

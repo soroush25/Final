@@ -1,26 +1,15 @@
 package src.controller;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import lombok.extern.log4j.Log4j;
 import src.model.bl.AccountBl;
 import src.model.bl.CardBl;
-import src.model.bl.CardBl;
 import src.model.entity.Card;
-import src.model.entity.AppData;
-import src.model.entity.Card;
-import src.model.entity.enums.City;
-import src.model.entity.enums.Gender;
-import src.model.tools.Validator;
-import src.view.WindowsManager;
 
 import java.net.URL;
 import java.util.List;
