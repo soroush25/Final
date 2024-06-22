@@ -2,7 +2,6 @@ package src.model.da;
 
 import lombok.extern.log4j.Log4j;
 import src.model.entity.Account;
-import src.model.entity.Customer;
 import src.model.entity.Receipt;
 import src.model.entity.Transaction;
 import src.model.tools.CRUD;
