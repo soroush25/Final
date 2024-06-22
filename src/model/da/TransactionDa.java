@@ -71,7 +71,7 @@ public class TransactionDa implements AutoCloseable, CRUD<Transaction> {
                     .builder()
                     .id(resultSet.getInt("ID"))
                     .amount(resultSet.getInt("Amount"))
-                    .sourceAccount(Account.builder().accountNumber(resultSet.getInt("sourceAccount")).build())
+                    .sourceAccount(Account.builder().accountNumber(resultSet.getInt("Account_src")).build())
                     .destinationAccount(Account.builder().accountNumber(resultSet.getInt("Account_dst")).build())
                     .transactionDateTime(resultSet.getTimestamp("TransactionDateTime"))
                     .transactionType(TransactionTypes.valueOf(resultSet.getString("TransactionType")))
