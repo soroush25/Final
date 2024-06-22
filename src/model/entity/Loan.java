@@ -5,10 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import src.model.entity.enums.LoanType;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
@@ -18,7 +16,6 @@ public class Loan {
     private int id;
     private Double interest;
     private Double amount;
-    private LoanType loanType;
     private Timestamp startDate;
 
     @Override

@@ -67,7 +67,6 @@ create table Loan
     id           number primary key,
     interest     nvarchar2(30),
     amount       nvarchar2(30),
-    loanType     nvarchar2(12),
     startDate    timestamp
 );
 

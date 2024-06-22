@@ -9,7 +9,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.extern.log4j.Log4j;
 import src.model.bl.LoanBl;
 import src.model.entity.Loan;
-import src.model.entity.enums.LoanType;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -20,7 +19,7 @@ import java.util.ResourceBundle;
 @Log4j
 public class LoanController implements Initializable {
     @FXML
-    private TextField idField, amountField, interestField, typeField;
+    private TextField idField, amountField, interestField;
 
     @FXML
     private Button saveBtn, deleteBtn, editBtn;
@@ -32,7 +31,7 @@ public class LoanController implements Initializable {
     private TableColumn<Loan, Integer> loanTableID;
 
     @FXML
-    private TableColumn<Loan, String> loanTableDate, loanTableAmount, loanTableInterest, loanTableType;
+    private TableColumn<Loan, String> loanTableDate, loanTableAmount, loanTableInterest;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -54,7 +53,6 @@ public class LoanController implements Initializable {
                         .startDate(Timestamp.valueOf(LocalDateTime.now()))
                         .amount(Double.valueOf(amountField.getText()))
                         .interest(Double.valueOf(interestField.getText()))
-                        .loanType(LoanType.valueOf(typeField.getText()))
                         .build();
 
                 LoanBl.getLoanBl().save(loan);
@@ -75,7 +73,6 @@ public class LoanController implements Initializable {
                         .startDate(Timestamp.valueOf(LocalDateTime.now()))
                         .amount(Double.valueOf(amountField.getText()))
                         .interest(Double.valueOf(interestField.getText()))
-                        .loanType(LoanType.valueOf(typeField.getText()))
                         .build();
 
                 LoanBl.getLoanBl().edit(loan);
@@ -106,7 +103,6 @@ public class LoanController implements Initializable {
             idField.setText(String.valueOf(loan.getId()));
             amountField.setText(String.valueOf(loan.getAmount()));
             interestField.setText(String.valueOf(loan.getInterest()));
-            typeField.setText(String.valueOf(loan.getLoanType()));
         });
     }
 
@@ -116,7 +112,6 @@ public class LoanController implements Initializable {
         loanTableDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         loanTableAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         loanTableInterest.setCellValueFactory(new PropertyValueFactory<>("interest"));
-        loanTableType.setCellValueFactory(new PropertyValueFactory<>("loanType"));
         loanTable.setItems(observableList);
     }
 
@@ -124,7 +119,6 @@ public class LoanController implements Initializable {
         idField.clear();
         amountField.clear();
         interestField.clear();
-        typeField.clear();
         showDataOnTable(LoanBl.getLoanBl().findAll());
     }
 }

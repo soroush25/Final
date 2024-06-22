@@ -2,7 +2,6 @@ package src.model.da;
 
 import lombok.extern.log4j.Log4j;
 import src.model.entity.Loan;
-import src.model.entity.enums.LoanType;
 import src.model.tools.CRUD;
 import src.model.tools.ConnectionProvider;
 
@@ -24,13 +23,12 @@ public class LoanDa implements AutoCloseable, CRUD<Loan> {
     public Loan save(Loan loan) throws Exception {
         loan.setId(ConnectionProvider.getConnectionProvider().getNextId("loan_seq"));
         preparedStatement = connection.prepareStatement(
-                "INSERT INTO LOAN (id, interest, amount, loanType, startDate) VALUES (?,?,?,?,?)"
+                "INSERT INTO LOAN (id, interest, amount, startDate) VALUES (?,?,?,?)"
         );
         preparedStatement.setInt(1, loan.getId());
         preparedStatement.setDouble(2, loan.getInterest());
         preparedStatement.setDouble(3, loan.getAmount());
-        preparedStatement.setString(4, String.valueOf(loan.getLoanType()));
-        preparedStatement.setString(5, String.valueOf(LocalDateTime.now()));
+        preparedStatement.setString(4, String.valueOf(LocalDateTime.now()));
         preparedStatement.execute();
         return loan;
     }
@@ -39,13 +37,12 @@ public class LoanDa implements AutoCloseable, CRUD<Loan> {
     @Override
     public Loan edit(Loan loan) throws Exception {
         preparedStatement = connection.prepareStatement(
-                "UPDATE LOAN SET interest = ?, amount = ?, loanType = ?, startDate = ? WHERE id = ?"
+                "UPDATE LOAN SET interest = ?, amount = ?, startDate = ? WHERE id = ?"
         );
         preparedStatement.setDouble(1, loan.getInterest());
         preparedStatement.setDouble(2, loan.getAmount());
-        preparedStatement.setString(3, String.valueOf(loan.getLoanType()));
-        preparedStatement.setString(4, String.valueOf(LocalDateTime.now()));
-        preparedStatement.setInt(5, loan.getId());
+        preparedStatement.setString(3, String.valueOf(LocalDateTime.now()));
+        preparedStatement.setInt(4, loan.getId());
         preparedStatement.execute();
         return loan;
     }
@@ -71,7 +68,6 @@ public class LoanDa implements AutoCloseable, CRUD<Loan> {
                     .id(resultSet.getInt("id"))
                     .interest(resultSet.getDouble("interest"))
                     .amount(resultSet.getDouble("amount"))
-                    .loanType(LoanType.valueOf(String.valueOf(resultSet.getString("loanType"))))
                     .startDate(Timestamp.valueOf(resultSet.getTimestamp("startDate").toLocalDateTime()))
                     .build();
             loanList.add(loan);
@@ -91,7 +87,6 @@ public class LoanDa implements AutoCloseable, CRUD<Loan> {
                     .id(resultSet.getInt("id"))
                     .interest(resultSet.getDouble("interest"))
                     .amount(resultSet.getDouble("amount"))
-                    .loanType(LoanType.valueOf(String.valueOf(resultSet.getString("loanType"))))
                     .startDate(Timestamp.valueOf(resultSet.getTimestamp("startDate").toLocalDateTime()))
                     .build();
         }
