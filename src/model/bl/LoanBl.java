@@ -2,9 +2,7 @@ package src.model.bl;
 
 import lombok.Getter;
 import src.controller.exceptions.NotFoundException;
-import src.model.da.BillDa;
 import src.model.da.LoanDa;
-import src.model.entity.Bill;
 import src.model.entity.Loan;
 import src.model.tools.CRUD;
 
