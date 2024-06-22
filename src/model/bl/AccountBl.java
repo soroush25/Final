@@ -89,14 +89,10 @@ public class AccountBl implements CRUD<Account> {
         }
     }
 
-    public Account balanceSum () throws Exception {
+    public String balanceSum () throws Exception {
         try (AccountDa accountDa = new AccountDa()) {
-            Account account = accountDa.balanceSum();
-            if (account != null) {
-                return account;
-            } else {
-                throw new NotFoundException();
-            }
+            String sum = accountDa.balanceSum();
+            return sum;
         }
     }
 
