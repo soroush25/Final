@@ -3,21 +3,19 @@ package src.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import lombok.extern.log4j.Log4j;
 import src.model.bl.AccountBl;
 import src.model.bl.TransactionBl;
 import src.model.entity.AppData;
-import src.model.entity.Customer;
 import src.model.entity.Transaction;
-import src.view.WindowsManager;
+import src.model.entity.enums.TransactionTypes;
 
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -27,16 +25,16 @@ public class CustomerTransactionController implements Initializable {
     private TextField amountField, accountField;
 
     @FXML
-    private Button customerTransferBtn, customerWithdrawalBtn, customerDepositBtn, customerReceiptBtn;
+    private Button customerTransferBtn, customerWithdrawalBtn, customerDepositBtn;
 
     @FXML
     private TableView<Transaction> customerTable;
 
     @FXML
-    private TableColumn<Customer, Integer> destinationCol;
+    private TableColumn<Transaction, Integer> accountCol;
 
     @FXML
-    private TableColumn<Customer, String> amountCol, balanceCol, typeCol, dateCol;
+    private TableColumn<Transaction, String> amountCol, typeCol, dateCol;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,8 +51,12 @@ public class CustomerTransactionController implements Initializable {
             try {
                 Transaction transaction = Transaction
                         .builder()
+                        .id(0)
                         .amount(Integer.parseInt(amountField.getText()))
+                        .sourceAccount(AccountBl.getAccountBl().findByAccountNumber(AppData.customer.getId()))
                         .destinationAccount(AccountBl.getAccountBl().findByAccountNumber(AppData.customer.getId()))
+                        .transactionDateTime(Timestamp.valueOf(LocalDateTime.now()))
+                        .transactionType(TransactionTypes.Deposit)
                         .build();
                 TransactionBl.getTransactionBl().save(transaction);
 //                AccountBl.getAccountBl().edit(amountField);
@@ -71,9 +73,12 @@ public class CustomerTransactionController implements Initializable {
             try {
                 Transaction transaction = Transaction
                         .builder()
+                        .id(0)
                         .amount(Integer.parseInt(amountField.getText()))
                         .sourceAccount(AccountBl.getAccountBl().findByCustomerId(AppData.customer.getId()))
                         .destinationAccount(AccountBl.getAccountBl().findByAccountNumber(Integer.parseInt(accountField.getText())))
+                        .transactionDateTime(Timestamp.valueOf(LocalDateTime.now()))
+                        .transactionType(TransactionTypes.Transfer)
                         .build();
                 TransactionBl.getTransactionBl().save(transaction);
 //                AccountBl.getAccountBl().edit(amountField);
@@ -90,8 +95,12 @@ public class CustomerTransactionController implements Initializable {
             try {
                 Transaction transaction = Transaction
                         .builder()
+                        .id(0)
                         .amount(Integer.parseInt(amountField.getText()))
                         .sourceAccount(AccountBl.getAccountBl().findByCustomerId(AppData.customer.getId()))
+                        .destinationAccount(AccountBl.getAccountBl().findByCustomerId(AppData.customer.getId()))
+                        .transactionDateTime(Timestamp.valueOf(LocalDateTime.now()))
+                        .transactionType(TransactionTypes.Withdrawal)
                         .build();
                 TransactionBl.getTransactionBl().save(transaction);
 //                AccountBl.getAccountBl().edit(amountField);
@@ -103,29 +112,18 @@ public class CustomerTransactionController implements Initializable {
                 alert.show();
             }
         });
-
-        customerReceiptBtn.setOnAction(event -> {
-            try {
-                Stage stage = new Stage();
-                Scene scene = new Scene(
-                        FXMLLoader.load(WindowsManager.class.getResource("../view/ReceiptPanel.fxml"))
-                );
-                stage.setScene(scene);
-                stage.show();
-            } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Error: \n" + e.getMessage());
-                alert.show();
-                log.error("ReceiptPanel Error: " + e.getMessage());
-            }
+        customerTable.setOnMouseClicked((event) -> {
+            Transaction transaction = customerTable.getSelectionModel().getSelectedItem();
+            amountField.setText(String.valueOf(transaction.getAmount()));
+            accountField.setText(String.valueOf(transaction.getDestinationAccount()));
         });
     }
 
     private void showDataOnTable(List<Transaction> transactionList) throws Exception {
         ObservableList<Transaction> observableList = FXCollections.observableList(transactionList);
-        destinationCol.setCellValueFactory(new PropertyValueFactory<>("account_dst"));
         amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
         dateCol.setCellValueFactory(new PropertyValueFactory<>("transactionDateTime"));
-        balanceCol.setCellValueFactory(new PropertyValueFactory<>("balance"));
+        accountCol.setCellValueFactory(new PropertyValueFactory<>("destinationAccount"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("transactionType"));
         customerTable.setItems(observableList);
     }

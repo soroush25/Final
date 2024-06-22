@@ -106,7 +106,7 @@ public class BillController implements Initializable {
     private void showDataOnTable(List<Bill> billList) throws Exception {
         ObservableList<Bill> observableList = FXCollections.observableList(billList);
         billTableID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        billTableAccount.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        billTableAccount.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         billTableBillNumber.setCellValueFactory(new PropertyValueFactory<>("billNumber"));
         billTableAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         billTable.setItems(observableList);

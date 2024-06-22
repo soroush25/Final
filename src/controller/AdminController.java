@@ -11,10 +11,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import lombok.extern.log4j.Log4j;
-import src.model.bl.AdminBl;
 import src.model.bl.CustomerBl;
 import src.model.entity.Admin;
-import src.model.entity.AppData;
 import src.model.entity.Customer;
 import src.model.entity.enums.City;
 import src.model.entity.enums.Gender;
@@ -37,7 +35,7 @@ public class AdminController implements Initializable {
     private RadioButton maleToggle, femaleToggle;
 
     @FXML
-    private TableView<Admin> adminTable;
+    private TableView<Customer> adminTable;
 
     @FXML
     private TableColumn<Admin, Integer> adminTableID;
@@ -105,7 +103,7 @@ public class AdminController implements Initializable {
                 RadioButton gender = (RadioButton) genderToggle.getSelectedToggle();
                 Customer customer = Customer
                         .builder()
-                        .id(AppData.customer.getId())
+                        .id(Integer.parseInt(idField.getText()))
                         .firstName(Validator.nameValidator(fnameField.getText(), "Invalid First Name!"))
                         .lastName(Validator.nameValidator(lnameField.getText(), "Invalid Last Name!"))
                         .nationalId(Validator.nationalIDValidator(nidField.getText(), "Invalid National ID!"))
@@ -256,30 +254,30 @@ public class AdminController implements Initializable {
         }));
 
         adminTable.setOnMouseClicked((event) -> {
-            Admin admin = adminTable.getSelectionModel().getSelectedItem();
-            idField.setText(String.valueOf(admin.getId()));
-            fnameField.setText(admin.getFirstName());
-            lnameField.setText(admin.getLastName());
-            nidField.setText(admin.getNationalId());
-            if (admin.getGender().equals(Gender.Male)) {
+            Customer customer = adminTable.getSelectionModel().getSelectedItem();
+            idField.setText(String.valueOf(customer.getId()));
+            fnameField.setText(customer.getFirstName());
+            lnameField.setText(customer.getLastName());
+            nidField.setText(customer.getNationalId());
+            if (customer.getGender().equals(Gender.Male)) {
                 maleToggle.setSelected(true);
             } else {
                 femaleToggle.setSelected(true);
             }
-            birthDatePicker.setValue(admin.getBirthDate());
-            emailField.setText(admin.getEmail());
-            phoneField.setText(admin.getPhone());
-            cityCmb.getSelectionModel().select(admin.getCity().ordinal());
-            addressField.setText(admin.getAddress());
-            usernameField.setText(admin.getUsername());
-            passwordField.setText(admin.getPassword());
+            birthDatePicker.setValue(customer.getBirthDate());
+            emailField.setText(customer.getEmail());
+            phoneField.setText(customer.getPhone());
+            cityCmb.getSelectionModel().select(customer.getCity().ordinal());
+            addressField.setText(customer.getAddress());
+            usernameField.setText(customer.getUsername());
+            passwordField.setText(customer.getPassword());
         });
     }
 
-    private void showDataOnTable(List<Admin> adminList) throws Exception {
-        ObservableList<Admin> observableList = FXCollections.observableList(adminList);
+    private void showDataOnTable(List<Customer> customerList) throws Exception {
+        ObservableList<Customer> observableList = FXCollections.observableList(customerList);
         adminTableID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        adminTableName.setCellValueFactory(new PropertyValueFactory<>("lname"));
+        adminTableName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         adminTableUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
         adminTablePassword.setCellValueFactory(new PropertyValueFactory<>("password"));
         adminTable.setItems(observableList);
@@ -300,6 +298,6 @@ public class AdminController implements Initializable {
         cityCmb.getSelectionModel().select(0);
         usernameField.clear();
         passwordField.clear();
-        showDataOnTable(AdminBl.getAdminBl().findAll());
+        showDataOnTable(CustomerBl.getCustomerBl().findAll());
     }
 }

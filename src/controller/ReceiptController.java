@@ -40,8 +40,8 @@ public class ReceiptController implements Initializable {
     private void showDataOnTable(List<Receipt> receiptList) throws Exception {
         ObservableList<Receipt> observableList = FXCollections.observableList(receiptList);
         receiptID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        receiptSrc.setCellValueFactory(new PropertyValueFactory<>("account_src"));
-        receiptDst.setCellValueFactory(new PropertyValueFactory<>("account_dst"));
+        receiptSrc.setCellValueFactory(new PropertyValueFactory<>("sourceAccount"));
+        receiptDst.setCellValueFactory(new PropertyValueFactory<>("destinationAccount"));
         receiptAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         receiptDate.setCellValueFactory(new PropertyValueFactory<>("transactionDateTime"));
         receiptTable.setItems(observableList);
