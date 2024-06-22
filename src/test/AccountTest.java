@@ -37,7 +37,7 @@ public class AccountTest {
 //        System.out.println(AccountBl.getAccountBl().findAll());
 //        System.out.println(AccountBl.getAccountBl().findById(1));
 //        System.out.println(AccountBl.getAccountBl().findByAccountType("Saving"));
-//        System.out.println(AccountBl.getAccountBl().findByBankName("Meli");
+//        System.out.println(AccountBl.getAccountBl().findByBankName("Meli"));
 //        System.out.println(AccountBl.getAccountBl().findByCustomerId("1"));
     }
 }
