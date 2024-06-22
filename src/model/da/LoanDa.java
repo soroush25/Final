@@ -6,10 +6,7 @@ import src.model.entity.enums.LoanType;
 import src.model.tools.CRUD;
 import src.model.tools.ConnectionProvider;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +29,7 @@ public class LoanDa implements AutoCloseable, CRUD<Loan> {
         preparedStatement.setDouble(2, loan.getInterest());
         preparedStatement.setDouble(3, loan.getAmount());
         preparedStatement.setString(4, String.valueOf(loan.getLoanType()));
-        preparedStatement.setString(5, String.valueOf(loan.getStartDate().now()));
+        preparedStatement.setString(5, String.valueOf(loan.getStartDate()));
         preparedStatement.execute();
         return loan;
     }
@@ -46,7 +43,7 @@ public class LoanDa implements AutoCloseable, CRUD<Loan> {
         preparedStatement.setDouble(1, loan.getInterest());
         preparedStatement.setDouble(2, loan.getAmount());
         preparedStatement.setString(3, String.valueOf(loan.getLoanType()));
-        preparedStatement.setString(4, String.valueOf(loan.getStartDate().now()));
+        preparedStatement.setString(4, String.valueOf(loan.getStartDate()));
         preparedStatement.setInt(5, loan.getId());
         preparedStatement.execute();
         return loan;
@@ -74,7 +71,7 @@ public class LoanDa implements AutoCloseable, CRUD<Loan> {
                     .interest(resultSet.getDouble("interest"))
                     .amount(resultSet.getDouble("amount"))
                     .loanType(LoanType.valueOf(String.valueOf(resultSet.getString("loanType"))))
-                    .startDate(resultSet.getTimestamp("startDate").toLocalDateTime())
+                    .startDate(Timestamp.valueOf(resultSet.getTimestamp("startDate").toLocalDateTime()))
                     .build();
             loanList.add(loan);
         }
@@ -94,7 +91,7 @@ public class LoanDa implements AutoCloseable, CRUD<Loan> {
                     .interest(resultSet.getDouble("interest"))
                     .amount(resultSet.getDouble("amount"))
                     .loanType(LoanType.valueOf(String.valueOf(resultSet.getString("loanType"))))
-                    .startDate(resultSet.getTimestamp("startDate").toLocalDateTime())
+                    .startDate(Timestamp.valueOf(resultSet.getTimestamp("startDate").toLocalDateTime()))
                     .build();
         }
         return loan;

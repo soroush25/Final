@@ -19,7 +19,7 @@ public class Loan {
     private Double interest;
     private Double amount;
     private LoanType loanType;
-    private LocalDateTime startDate;
+    private Timestamp startDate;
 
     @Override
     public String toString() {

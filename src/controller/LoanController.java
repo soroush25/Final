@@ -12,6 +12,7 @@ import src.model.entity.Loan;
 import src.model.entity.enums.LoanType;
 
 import java.net.URL;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -50,7 +51,7 @@ public class LoanController implements Initializable {
                 Loan loan = Loan
                         .builder()
                         .id(Integer.parseInt(idField.getText()))
-                        .startDate(LocalDateTime.now())
+                        .startDate(Timestamp.valueOf(LocalDateTime.now()))
                         .amount(Double.valueOf(amountField.getText()))
                         .interest(Double.valueOf(interestField.getText()))
                         .loanType(LoanType.valueOf(typeField.getText()))
@@ -71,7 +72,7 @@ public class LoanController implements Initializable {
                 Loan loan = Loan
                         .builder()
                         .id(Integer.parseInt(idField.getText()))
-                        .startDate(LocalDateTime.now())
+                        .startDate(Timestamp.valueOf(LocalDateTime.now()))
                         .amount(Double.valueOf(amountField.getText()))
                         .interest(Double.valueOf(interestField.getText()))
                         .loanType(LoanType.valueOf(typeField.getText()))
