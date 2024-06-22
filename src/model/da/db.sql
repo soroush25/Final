@@ -85,5 +85,6 @@ create sequence admin_seq start with 1 increment by 1;
 create sequence account_seq start with 1 increment by 1;
 create sequence transaction_seq start with 1 increment by 1;
 create sequence bill_seq start with 1 increment by 1;
+create sequence card_seq start with 1 increment by 1;
 create sequence loan_seq start with 1 increment by 1;
 create sequence receipt_seq start with 1 increment by 1;
