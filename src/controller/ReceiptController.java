@@ -7,9 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.extern.log4j.Log4j;
-import src.model.bl.ReceiptBl;
 import src.model.bl.TransactionBl;
-import src.model.entity.Receipt;
 import src.model.entity.Transaction;
 
 import java.net.URL;

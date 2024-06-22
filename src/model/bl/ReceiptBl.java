@@ -54,7 +54,7 @@ public class ReceiptBl implements CRUD<Receipt> {
             List<Receipt> receiptList = receiptDa.findAll();
             if (!receiptList.isEmpty()) {
                 for (Receipt receipt : receiptList) {
-                    receipt.setAmount(null);
+                    receipt.setAmount(TransactionBl.getTransactionBl().findById(receipt.getAmount().getId()));
                     receipt.setTransactionDateTime(TransactionBl.getTransactionBl().findByDateTimeReport(receipt.getTransactionDateTime().getTransactionDateTime()));
                     receipt.setSourceAccount(AccountBl.getAccountBl().findByAccountNumber(receipt.getSourceAccount().getAccountNumber()));
                     receipt.setDestinationAccount(AccountBl.getAccountBl().findByAccountNumber(receipt.getDestinationAccount().getAccountNumber()));
@@ -72,9 +72,9 @@ public class ReceiptBl implements CRUD<Receipt> {
             Receipt receipt = receiptDa.findById(id);
             if (receipt != null) {
                 receipt.setAmount(TransactionBl.getTransactionBl().findById(receipt.getAmount().getId()));
-                receipt.setTransactionDateTime(TransactionBl.getTransactionBl().findByDateTimeReport(receipt.getTransactionDateTime().getTransactionDateTime()));
-                receipt.setSourceAccount(AccountBl.getAccountBl().findByAccountNumber(receipt.getSourceAccount().getAccountNumber()));
-                receipt.setDestinationAccount(AccountBl.getAccountBl().findByAccountNumber(receipt.getDestinationAccount().getAccountNumber()));
+                receipt.setTransactionDateTime(TransactionBl.getTransactionBl().findById(receipt.getTransactionDateTime().getId()));
+                receipt.setSourceAccount(AccountBl.getAccountBl().findById(receipt.getSourceAccount().getAccountNumber()));
+                receipt.setDestinationAccount(AccountBl.getAccountBl().findById(receipt.getDestinationAccount().getAccountNumber()));
                 return receipt;
             } else {
                 throw new NotFoundException();
