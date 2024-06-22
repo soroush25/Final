@@ -69,7 +69,7 @@ public class ReceiptDa implements AutoCloseable, CRUD<Receipt> {
                     .builder()
                     .id(resultSet.getInt("id"))
                     .amount(Transaction.builder().amount(resultSet.getInt("amount")).build())
-//                    .transactionDateTime(Transaction.builder().transactionDateTime(resultSet.getTimestamp("transactionDateTime")).build())
+                    .transactionDateTime(Transaction.builder().transactionDateTime(resultSet.getTimestamp("transactionDateTime")).build())
                     .sourceAccount(Account.builder().accountNumber(resultSet.getInt("account_src")).build())
                     .destinationAccount(Account.builder().accountNumber(resultSet.getInt("account_dst")).build())
                     .build();
@@ -89,7 +89,7 @@ public class ReceiptDa implements AutoCloseable, CRUD<Receipt> {
                     .builder()
                     .id(resultSet.getInt("id"))
                     .amount(Transaction.builder().amount(resultSet.getInt("amount")).build())
-//                    .transactionDateTime(Transaction.builder().transactionDateTime(resultSet.getTimestamp("transactionDateTime")).build())
+                    .transactionDateTime(Transaction.builder().transactionDateTime(resultSet.getTimestamp("transactionDateTime")).build())
                     .sourceAccount(Account.builder().accountNumber(resultSet.getInt("account_src")).build())
                     .destinationAccount(Account.builder().accountNumber(resultSet.getInt("account_dst")).build())
                     .build();
