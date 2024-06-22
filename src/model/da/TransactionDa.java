@@ -181,6 +181,25 @@ public class TransactionDa implements AutoCloseable, CRUD<Transaction> {
         return transaction;
     }
 
+    public Transaction findByDateTimeReport(Timestamp transactionDateTime) throws Exception {
+        preparedStatement = connection.prepareStatement("SELECT * FROM TRANSACTION WHERE transactionDateTime BETWEEN ? and ? ORDER BY ID");
+        preparedStatement.setTimestamp(1, transactionDateTime);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Transaction transaction = null;
+        if (resultSet.next()) {
+            transaction = Transaction
+                    .builder()
+                    .id(resultSet.getInt("ID"))
+                    .amount(resultSet.getInt("Amount"))
+                    .sourceAccount(Account.builder().accountNumber(resultSet.getInt("Account_src")).build())
+                    .destinationAccount(Account.builder().accountNumber(resultSet.getInt("Account_dst")).build())
+                    .transactionDateTime(resultSet.getTimestamp("TransactionDateTime"))
+                    .transactionType(TransactionTypes.valueOf(resultSet.getString("TransactionType")))
+                    .build();
+        }
+        return transaction;
+    }
+
     public String transactionSum () throws Exception {
         preparedStatement = connection.prepareStatement("SELECT SUM(AMOUNT) FROM TRANSACTION");
         ResultSet resultSet = preparedStatement.executeQuery();

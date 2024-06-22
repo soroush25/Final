@@ -138,6 +138,19 @@ public class TransactionBl implements CRUD<Transaction> {
         }
     }
 
+    public Transaction findByDateTimeReport(Timestamp transactionDateTime) throws Exception {
+        try (TransactionDa transactionDa = new TransactionDa()) {
+            Transaction transaction = transactionDa.findByDateTimeReport(transactionDateTime);
+            if (transaction != null) {
+                transaction.setSourceAccount(AccountBl.getAccountBl().findByAccountNumber(transaction.getSourceAccount().getAccountNumber()));
+                transaction.setDestinationAccount(AccountBl.getAccountBl().findByAccountNumber(transaction.getDestinationAccount().getAccountNumber()));
+                return transaction;
+            } else {
+                throw new NotFoundException();
+            }
+        }
+    }
+
     public String transactionSum () throws Exception {
         try (AccountDa accountDa = new AccountDa()) {
             String sum = accountDa.balanceSum();
