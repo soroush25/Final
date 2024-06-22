@@ -28,7 +28,7 @@ public class LoanDa implements AutoCloseable, CRUD<Loan> {
         preparedStatement.setInt(1, loan.getId());
         preparedStatement.setDouble(2, loan.getInterest());
         preparedStatement.setDouble(3, loan.getAmount());
-        preparedStatement.setString(4, String.valueOf(LocalDateTime.now()));
+        preparedStatement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
         preparedStatement.execute();
         return loan;
     }
@@ -41,7 +41,7 @@ public class LoanDa implements AutoCloseable, CRUD<Loan> {
         );
         preparedStatement.setDouble(1, loan.getInterest());
         preparedStatement.setDouble(2, loan.getAmount());
-        preparedStatement.setString(3, String.valueOf(LocalDateTime.now()));
+        preparedStatement.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
         preparedStatement.setInt(4, loan.getId());
         preparedStatement.execute();
         return loan;
